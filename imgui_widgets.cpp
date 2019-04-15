@@ -6533,8 +6533,8 @@ bool ImGui::Selectable(const char* label, bool selected, ImGuiSelectableFlags fl
     ImRect bb(min_x, pos.y, text_max.x, text_max.y);
     if ((flags & ImGuiSelectableFlags_NoPadWithHalfSpacing) == 0)
     {
-        const float spacing_x = span_all_columns ? 0.0f : ImMax(style.ItemSpacing.x - style.SelectableSpacing.x, 0.0f);
-        const float spacing_y = ImMax(style.ItemSpacing.y - style.SelectableSpacing.y, 0.0f);
+        const float spacing_x = span_all_columns ? 0.0f : style.ItemSpacing.x;
+        const float spacing_y = style.ItemSpacing.y;
         const float spacing_L = IM_FLOOR(spacing_x * 0.50f);
         const float spacing_U = IM_FLOOR(spacing_y * 0.50f);
         bb.Min.x -= spacing_L;
@@ -7026,7 +7026,9 @@ void ImGui::MultiSelectItemFooter(ImGuiID id, bool* p_selected, bool* p_pressed)
     bool hovered = IsItemHovered(ImGuiHoveredFlags_AllowWhenBlockedByPopup);
     if (hovered && IsMouseClicked(1))
     {
-        SetFocusID(g.LastItemData.ID, window);
+        if (g.ActiveId != 0 && g.ActiveId != id)
+            ClearActiveID();
+        SetFocusID(id, window);
         if (!pressed && !selected)
         {
             pressed = true;
