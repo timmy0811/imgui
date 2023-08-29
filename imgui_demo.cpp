@@ -3188,6 +3188,7 @@ static void ShowDemoWindowMultiSelect()
             ImGui::TreePop();
         }
 
+        // See ShowExampleAppAssetsBrowser()
         if (ImGui::TreeNode("Multi-Select (tiled assets browser)"))
         {
             ImGui::BulletText("See 'Examples->Assets Browser' in menu");
@@ -3227,6 +3228,7 @@ static void ShowDemoWindowMultiSelect()
             ImGui::CheckboxFlags("ImGuiMultiSelectFlags_ClearOnEscape", &flags, ImGuiMultiSelectFlags_ClearOnEscape);
             ImGui::CheckboxFlags("ImGuiMultiSelectFlags_ClearOnClickWindowVoid", &flags, ImGuiMultiSelectFlags_ClearOnClickWindowVoid);
             ImGui::CheckboxFlags("ImGuiMultiSelectFlags_SelectOnClickRelease", &flags, ImGuiMultiSelectFlags_SelectOnClickRelease); ImGui::SameLine();  HelpMarker("Allow dragging an unselected item without altering selection.");
+            ImGui::CheckboxFlags("ImGuiMultiSelectFlags_BoxSelect", &flags, ImGuiMultiSelectFlags_BoxSelect);
 
             // Initialize default list with 1000 items.
             static ImVector<int> items;
@@ -9194,7 +9196,7 @@ struct ExampleAssetsBrowser
             ImGui::SetCursorScreenPos(start_pos);
 
             // Multi-select
-            ImGuiMultiSelectFlags ms_flags = ImGuiMultiSelectFlags_ClearOnEscape | ImGuiMultiSelectFlags_ClearOnClickWindowVoid;
+            ImGuiMultiSelectFlags ms_flags = ImGuiMultiSelectFlags_ClearOnEscape | ImGuiMultiSelectFlags_ClearOnClickWindowVoid | ImGuiMultiSelectFlags_BoxSelect;
             ImGuiMultiSelectIO* ms_io = ImGui::BeginMultiSelect(ms_flags);
             ExampleSelectionAdapter selection_adapter;
             selection_adapter.Data = this;
