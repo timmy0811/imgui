@@ -9064,7 +9064,8 @@ struct ExampleAssetsBrowser
     // Options
     bool                    ShowTypeOverlay = true;
     float                   IconSize = 32.0f;
-    int                     IconSpacing = 7;
+    int                     IconSpacing = 10;
+    int                     IconHitSpacing = 4; // Increase hit-spacing if you want to make it possible to clear or box-select from gaps. Some spacing is required to able to amend with Shift+box-select. Value is small in Explorer.
     bool                    StretchSpacing = true;
 
     // State
@@ -9127,6 +9128,7 @@ struct ExampleAssetsBrowser
                 ImGui::SeparatorText("Layout");
                 ImGui::SliderFloat("Icon Size", &IconSize, 16.0f, 128.0f, "%.0f");
                 ImGui::SliderInt("Icon Spacing", &IconSpacing, 0, 32);
+                ImGui::SliderInt("Icon Hit Spacing", &IconHitSpacing, 0, 32);
                 ImGui::Checkbox("Stretch Spacing", &StretchSpacing);
                 ImGui::PopItemWidth();
                 ImGui::EndMenu();
@@ -9203,7 +9205,8 @@ struct ExampleAssetsBrowser
             // But it is necessary for two reasons:
             // - Selectables uses it by default to visually fill the space between two items.
             // - The vertical spacing would be measured by Clipper to calculate line height if we didn't provide it explicitly (here we do).
-            ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(item_spacing, item_spacing));
+            const float selectable_spacing = IM_MAX(item_spacing - IconHitSpacing, 0.0f);
+            ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(selectable_spacing, selectable_spacing));
 
             // Rendering parameters
             const ImU32 icon_bg_color = IM_COL32(48, 48, 48, 128);
