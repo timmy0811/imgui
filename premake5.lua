@@ -1,7 +1,8 @@
 project "ImGui"
 	kind "StaticLib"
 	language "C++"
-    staticruntime "off"
+	cppdialect "C++17"
+    staticruntime "On"
 
 	targetdir (outputdirBIN)
 	objdir (outputdirOBJ)
@@ -23,7 +24,6 @@ project "ImGui"
 
 	filter "system:windows"
 		systemversion "latest"
-		cppdialect "C++17"
 
         defines{
             "_IMGUI_WIN32"
@@ -39,10 +39,9 @@ project "ImGui"
 		symbols "on"
 
 	filter "configurations:Release"
-		buildoptions "/MT"
+		runtime "Release"
 		optimize "on"
 
     filter "configurations:Dist"
-		buildoptions "/MT"
+	runtime "Release"
 		optimize "on"
-        symbols "off"
